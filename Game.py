@@ -10,8 +10,8 @@ import time
 pic_bg = []
 pic_art = {}
 article = []
-event = []
-sentence = []
+event = {}
+sentence = {}
 
 # 读取结构化剧本文件
 with open(u"./text/Chapter1.txt", encoding='UTF-8') as data:
@@ -28,19 +28,13 @@ for col in article:
     if col[0] == 'character':
         pic_art[col[1]] = col[3][1:-3]
     if col[0] == 'event':
-        a = {}
-        a['role'] = col[1]
         b = col[3][:-2]
         if b == 'true':
-            a['bool'] = True
+            event[col[1]] = True
         elif b == 'false':
-            a['bool'] = False
-        #待定
-        event.append(a)
+            event[col[1]] = False
     if '9' >= col[0][0] >= '1':
-        a = {}
-        a['col'] = num
-        sentence.append(a)
+        sentence[col[0]] = num
 
 # 初始化
 pygame.init()
@@ -50,12 +44,10 @@ screen = pygame.display.set_mode(size)    # 创建窗口
 # 2.背景图片的设置
 BLACK = 0, 0, 0  # 通过函数传递参数 设置窗口背景颜色
 screen.fill(BLACK)  # 设置窗口背景颜色
-background = pygame.image.load("./img/bg/bg1.jpg")   # 载入图片
-screen.blit(background, (0, 0))
-# 把图片background放到（0,0）的位置
+background = pygame.image.load("./img/bg/bg1.jpg")  # 载入背景图片
+screen.blit(background, (0, 0))  # 把图片background放到（0,0）的位置
 # 3.窗体标题栏的设置
 # 4.矩形框的设置
-
 #r1POS=0,50,500,100  # r1rect矩形框的左上角坐标x,y,矩形框的宽度，高度
 #r1WIDTH=0   # 矩形的边框宽度。0表示填充矩形
 #r1rect=pygame.draw.rect(screen,GREEN,r1POS,r1WIDTH)
@@ -68,9 +60,11 @@ micFONT = pygame.freetype.Font('C://Windows//Fonts//simhei.ttf', 18)  # 字体�
 
 
 class Text():
-    # role为指定的角色的名称，这里我用的是int类型，后面可直接改为角色名即string类型，
-    # poition为角色显示的位置，0为左边，1为中间，2为右边
-    # filename是打开的文件的名称，因为可能有对话的文件和旁白什么的
+    """
+    role: 字符串代表角色名字
+    position: 角色位置
+    talk: 角色所说的话
+    """
     def __init__(self, role, position, talk):
         self.role = role
         self.position = position
@@ -100,9 +94,9 @@ for col in article:
             sys.exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             break'''
-
+    t = 0
     if '9' >= col[0][0] >= '1':
-        index = sentence[int(col[0])-1]['col']
+        index = sentence[col[0]]
         sen = article[index]
         sen = sen.split(' ')
         # TEXT.role = sen[1]
@@ -110,8 +104,9 @@ for col in article:
         # TEXT.talk = sen[3]
         TEXT = Text(sen[1], sen[2], sen[3][1: -3])
         TEXT.display()
+        t = int(len(sen[3])/8)
     pygame.display.update()  # 显示图片
-    time.sleep(3)
+    time.sleep(t)
 
 '''
 while True:
@@ -139,3 +134,4 @@ while True:
             print("[MOUSEBUTTONDOWN]:",event.pos,event.button)
     pygame.display.update() # 显示图片
 '''
+
