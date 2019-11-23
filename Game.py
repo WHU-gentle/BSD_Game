@@ -69,19 +69,19 @@ class Text():
         self.role = role
         self.position = position
         self.talk = talk
+        self.diag = pygame.image.load("./img/diag_board.jpg")
+        self.role_pic = pygame.image.load(pic_art[self.role])  # 加载图片
 
     def display(self):
         choicePOS = [70, 531]  # 对话出现的位置
-        role_pic = pygame.image.load(pic_art[self.role])  # 加载图片
-        diag = pygame.image.load("./img/diag_board.jpg")
         if self.position == '左':
             role_position = 0
         elif self.position == '中':
             role_position = 400
         elif self.position == '右':
             role_position = 700
-        screen.blit(role_pic, (role_position, 0))  # 显示角色图片
-        screen.blit(diag, (40, 500))  # 显示对话背景
+        screen.blit(self.role_pic, (role_position, 0))  # 显示角色图片
+        screen.blit(self.diag, (40, 500))  # 显示对话背景
         wordRect1 = micFONT.render_to(screen, choicePOS, self.talk, fgcolor=BLACK, size=30)  # 输出对话内容
         choicePOS[1] = choicePOS[1] + 30
 
@@ -99,9 +99,6 @@ for col in article:
         index = sentence[col[0]]
         sen = article[index]
         sen = sen.split(' ')
-        # TEXT.role = sen[1]
-        # TEXT.position = sen[2]
-        # TEXT.talk = sen[3]
         TEXT = Text(sen[1], sen[2], sen[3][1: -3])
         TEXT.display()
         t = int(len(sen[3])/8)
