@@ -1,11 +1,13 @@
 Chapter 1
 
 background = "./img/bg/chapter_1.jpg";
-character 旁白 = "./img/role/pangbai.jpg";
-character 小五郎 = "./img/role/xiaowulang.jpg";
+character 旁白 = "./img/role/pangbai.png";
+character 小五郎 = "./img/role/xiaowulang.png";
 character 小黑 = "./img/role/xiaohei.jpg";
 
+set position null null null
 1 旁白 中 "敲门声急促响起~";
+set position xiaowulang xiaohei null
 2 小五郎 左 "偶，怎么会是你，小黑好久不见，你不是应该现在在摩尔庄园做客吗?";
 3 小黑 右 "幸亏你在这个镇上，我告诉你天大的消息，摩尔庄园的老太太死掉了!";
 4 小黑 右 "我昨天晚上突然被叫醒，去老太太的卧室，发现所有入口都被锁住了，老太太喘不上气，天哪，我们赶紧找来了医生，但是老太太急促呼吸，嘴里不停叫着莱纳德的名字，然后就死掉了。";
