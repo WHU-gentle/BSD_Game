@@ -5,7 +5,7 @@ import time
 from ctlClass import *
 
 # 游戏资源存储
-pic_bg = []
+pic_bg = ''
 pic_art = {}
 article = []
 event = {}
@@ -24,7 +24,7 @@ for col in article:
     num = num + 1
     col = col.split(' ')
     if col[0] == 'background':
-        pic_bg.append(col[2][1:-3])
+        pic_bg = col[2][1:-3]
     if col[0] == 'character':
         pic_art[col[1]] = col[3][1:-3]
     if col[0] == 'event':
