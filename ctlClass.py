@@ -4,6 +4,11 @@
 实现了文档中的人物x说话y时的控制效果
 并在主函数部分进行了测试
 测试复现方法：运行后，分别敲击键盘的a,s,d键
+————————————————————————————————————————
+Update(Dec/05/2019):增加了DisplayWords函数，更新了DisplayDialog函数，实现了文字的自动换行
+测试换行功能请键盘敲击A,S,D键
+Update(Dec/05/2019):增加了Option函数，实现了键盘敲击选择的功能
+测试选择功能请键盘敲击1/2/3/4 并查看terminal的输出
 '''
 
 import pygame,sys
@@ -65,19 +70,40 @@ def DisplayPlayer(i, pos):
     screen.blit(role_pic, (role_position, 0)) 
 
 
+'''
+DisplayWords函数：自动换行，显示文字text到surf上。
+配合DisplayDialog食用
+'''
+def DisplayWords(surf, text, font, color=(0, 0, 0)):
+    font.origin = True
+    words = text.split(' ')
+    width, height = surf.get_size()
+    line_spacing = font.get_sized_height() + 2
+    x, y = 0, 530
+    space = font.get_rect(' ')
+    for word in words:
+        bounds = font.get_rect(word)
+        if x + bounds.width + bounds.x >= width:
+            x, y = 0, y + line_spacing
+        if x + bounds.width + bounds.x >= width:
+            raise ValueError("word too wide for the surface")
+        if y + bounds.height - bounds.y >= height:
+            raise ValueError("text to long for the surface")
+        font.render_to(surf, (x,y), None, color)
+        x += bounds.width + space.width
+    return x, y
+
+'''
+DisplayDialog函数
+function:绘制文字、绘制对话框
+DEC/05/2019 UPDATE:实现了自动换行
+传入参数：要显示的文字
+'''
 def DisplayDialog(text):
-    '''
-    DisplayDialog函数
-    绘制文字、绘制对话框
-    TODO:升级成响应式文字框：类似微信聊天中文字框随着文字多少而缩放的效果.第14周再做吧
-    '''
-    FONT = pygame.freetype.Font('font/simhei.ttf', 18)  # 字体路径，字体大小
-    recSIZE = [10, 500]    # 对话框的大小
-    recPOS = [980, 200]    # 对话框出现的位置
-    wordPOS = [70, 531]  # 文字出现的位置
-    recCOLOR = 223, 221, 132  # 对话框的颜色：黄色
-    pygame.draw.rect(screen, recCOLOR, (recSIZE, recPOS))    # 绘制对话框
-    wordRect1 = FONT.render_to(screen, wordPOS, text, size=30)  # 绘制文字
+    image=pygame.image.load("img/textIMG.png")
+    screen.blit(image,(0,500))
+    DisplayWords(screen, text,pygame.freetype.SysFont('Simhei', 20))
+
 
 
 def ShowPic(text, figure1, figure2, figure3):
@@ -132,23 +158,44 @@ def Speaker(figureL, allowL, figureM, allowM, figureR, allowR, text):
     pic3 = allowR
     DecidePic(figureL, pic1, figureM, pic2, figureR, pic3, text)
 
+'''
+Option函数：选择功能
+function:用户在键盘上输入1/2/3/4时分别对应于4个选项
+传入参数：pygame.KEYDOWN时的键盘的值event.key
+返回值：数字1/2/3/4
+'''
+def Option(key):
+    if event.key==pygame.K_1 :
+        return 1
+    elif event.key==pygame.K_2:
+        return 2
+    elif event.key==pygame.K_3:
+        return 3
+    elif event.key==pygame.K_4:
+        return 4
 
 # 初始化窗口
 screen = InitWindows(1000, 700, "BSDGame")
 
 
 '''
-while True:  # 无限循环直至用户点击×
+-------------------------------------------------------main测试部分------------------------------------------------------
+screen=InitWindows(1000,700,"here is name of this unit")
+while True: # 无限循环直至用户点击×
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:  # 用户按下了结束键
+        if event.type==pygame.QUIT: # 用户按下了结束键
             sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a:
-                Speaker("1", True, "2", False, "3", False, "hello,world")
-            elif event.key == pygame.K_s:
-                Speaker("1", True, "2", True, "3", False, "Nice to meet you")
-            elif event.key == pygame.K_d:
-                Speaker("3", True, "2", True, "3", False, "Remember me?")
-    pygame.display.update()  # 显示图片
+        elif event.type==pygame.KEYDOWN:
+            if event.key==pygame.K_a :
+                Speaker("1",True,"2",False,"3",False,"贝叶斯网络（Bayesian Network）是一种用于表示变量间依赖关系的数据结构，有时它又被称为信念网络（Belief Network）或概率网络（Probability Network）。在统计学习领域，概率图模型（PGM，Probabilistic Graphical Models）常用来指代包括贝叶斯网络在内的更加宽泛的一类机器学习模型，例如隐马尔可夫模型（HMM，Hidden Markov Model）也是一种PGM。")
+            elif event.key==pygame.K_s:
+                Speaker("1",True,"2",True,"3",False,"Nice to meet you")
+            elif event.key==pygame.K_d:
+                Speaker("3",True,"2",True,"3",False,"Remember me?")   
+            else:
+                choiceNow=Option(event.key)
+                print("Choice now is:"+str(choiceNow))
+
+    pygame.display.update() # 显示图片
 '''
 
