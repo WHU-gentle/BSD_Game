@@ -11,11 +11,11 @@ Update(Dec/05/2019):增加了Option函数，实现了键盘敲击选择的功能
 测试选择功能请键盘敲击1/2/3/4 并查看terminal的输出
 '''
 
-import pygame,sys
+import pygame
+import sys
 import pygame.freetype  # 绘制文字的增强库
 import io
-
-
+#from Game import pic_bg  # 背景图片路径
 
 
 def InitWindows(width, height, title):
@@ -89,21 +89,21 @@ def DisplayWords(surf, text, font, color=(0, 0, 0)):
             raise ValueError("word too wide for the surface")
         if y + bounds.height - bounds.y >= height:
             raise ValueError("text to long for the surface")
-        font.render_to(surf, (x,y), None, color)
+        font.render_to(surf, (x, y), None, color)
         x += bounds.width + space.width
     return x, y
 
-'''
-DisplayDialog函数
-function:绘制文字、绘制对话框
-DEC/05/2019 UPDATE:实现了自动换行
-传入参数：要显示的文字
-'''
-def DisplayDialog(text):
-    image=pygame.image.load("img/textIMG.png")
-    screen.blit(image,(0,500))
-    DisplayWords(screen, text,pygame.freetype.SysFont('Simhei', 20))
 
+def DisplayDialog(text):
+    '''
+    DisplayDialog函数
+    function:绘制文字、绘制对话框
+    DEC/05/2019 UPDATE:实现了自动换行
+    传入参数：要显示的文字
+    '''
+    image = pygame.image.load("img/textIMG.png")
+    screen.blit(image, (0, 500))
+    DisplayWords(screen, text, pygame.freetype.SysFont('Simhei', 20))
 
 
 def ShowPic(text, figure1, figure2, figure3):
@@ -112,7 +112,7 @@ def ShowPic(text, figure1, figure2, figure3):
     function:显示图片/文字在屏幕上
     传入：text是字符串，figure1是将会显示在左边的人物图片，figure2是中间、figure3是右边
     '''
-    LoadBg(screen, "img/bg/bg1.png")
+    LoadBg(screen, "./img/bg/bg1.png")
     if pic1:
         # 显示pic1
         DisplayPlayer(figure1, "left")
@@ -158,26 +158,26 @@ def Speaker(figureL, allowL, figureM, allowM, figureR, allowR, text):
     pic3 = allowR
     DecidePic(figureL, pic1, figureM, pic2, figureR, pic3, text)
 
-'''
-Option函数：选择功能
-function:用户在键盘上输入1/2/3/4时分别对应于4个选项
-传入参数：pygame.KEYDOWN时的键盘的值event.key
-返回值：数字1/2/3/4
-'''
+
 def Option(key):
-    if event.key==pygame.K_1 :
+    '''
+    Option函数：选择功能
+    function:用户在键盘上输入1/2/3/4时分别对应于4个选项
+    传入参数：pygame.KEYDOWN时的键盘的值event.key
+    返回值：数字1/2/3/4
+    '''
+    if event.key == pygame.K_1:
         return 1
-    elif event.key==pygame.K_2:
+    elif event.key == pygame.K_2:
         return 2
-    elif event.key==pygame.K_3:
+    elif event.key == pygame.K_3:
         return 3
-    elif event.key==pygame.K_4:
+    elif event.key == pygame.K_4:
         return 4
+
 
 # 初始化窗口
 screen = InitWindows(1000, 700, "BSDGame")
-
-
 '''
 -------------------------------------------------------main测试部分------------------------------------------------------
 screen=InitWindows(1000,700,"here is name of this unit")
@@ -198,4 +198,3 @@ while True: # 无限循环直至用户点击×
 
     pygame.display.update() # 显示图片
 '''
-
