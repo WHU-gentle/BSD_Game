@@ -16,8 +16,6 @@ import pygame.freetype  # 绘制文字的增强库
 import io
 
 
-
-
 def InitWindows(width, height, title):
     '''
     InitWindows函数
@@ -70,11 +68,11 @@ def DisplayPlayer(i, pos):
     screen.blit(role_pic, (role_position, 158))
 
 
-'''
-DisplayWords函数：自动换行，显示文字text到surf上。
-配合DisplayDialog食用
-'''
 def DisplayWords(surf, text, font, color=(0, 0, 0)):
+    '''
+    DisplayWords函数：自动换行，显示文字text到surf上。
+    配合DisplayDialog食用
+    '''
     font.origin = True
     width, height = surf.get_size()
     line_spacing = font.get_sized_height() + 2
@@ -89,20 +87,20 @@ def DisplayWords(surf, text, font, color=(0, 0, 0)):
             raise ValueError("word too wide for the surface")
         if y + bounds.height - bounds.y >= height:
             raise ValueError("text to long for the surface")
-        font.render_to(surf, (x,y), None, color)
+        font.render_to(surf, (x, y), None, color)
     return x, y
 
-'''
-DisplayDialog函数
-function:绘制文字、绘制对话框
-DEC/05/2019 UPDATE:实现了自动换行
-传入参数：要显示的文字
-'''
-def DisplayDialog(text):
-    image=pygame.image.load("img/textIMG.png")
-    screen.blit(image,(0,500))
-    DisplayWords(screen, text,pygame.freetype.SysFont('Simhei', 20))
 
+def DisplayDialog(text):
+    '''
+    DisplayDialog函数
+    function:绘制文字、绘制对话框
+    DEC/05/2019 UPDATE:实现了自动换行
+    传入参数：要显示的文字
+    '''
+    image=pygame.image.load("img/textIMG.png")
+    screen.blit(image, (0, 500))
+    DisplayWords(screen, text, pygame.freetype.SysFont('Simhei', 20))
 
 
 def ShowPic(text, figure1, figure2, figure3):
@@ -149,6 +147,7 @@ def Speaker(figureL, allowL, figureM, allowM, figureR, allowR, text):
             M,R同理
             text是要显示的文字
     '''
+    print(text)
     global pic1
     global pic2
     global pic3
@@ -157,26 +156,26 @@ def Speaker(figureL, allowL, figureM, allowM, figureR, allowR, text):
     pic3 = allowR
     DecidePic(figureL, pic1, figureM, pic2, figureR, pic3, text)
 
-'''
-Option函数：选择功能
-function:用户在键盘上输入1/2/3/4时分别对应于4个选项
-传入参数：pygame.KEYDOWN时的键盘的值event.key
-返回值：数字1/2/3/4
-'''
+
 def Option(key):
-    if event.key==pygame.K_1 :
+    '''
+    Option函数：选择功能
+    function:用户在键盘上输入1/2/3/4时分别对应于4个选项
+    传入参数：pygame.KEYDOWN时的键盘的值event.key
+    返回值：数字1/2/3/4
+    '''
+    if event.key == pygame.K_1 :
         return 1
-    elif event.key==pygame.K_2:
+    elif event.key == pygame.K_2:
         return 2
-    elif event.key==pygame.K_3:
+    elif event.key == pygame.K_3:
         return 3
-    elif event.key==pygame.K_4:
+    elif event.key == pygame.K_4:
         return 4
+
 
 # 初始化窗口
 screen = InitWindows(1000, 700, "BSDGame")
-
-
 '''
 -------------------------------------------------------main测试部分------------------------------------------------------
 screen=InitWindows(1000,700,"here is name of this unit")

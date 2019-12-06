@@ -3,14 +3,7 @@ import sys
 from ctlClass import Speaker
 
 # 游戏资源存储
-<<<<<<< HEAD
-
-
 pic_bg = ''
-
-=======
-pic_bg = ''
->>>>>>> f87fc1ed284c6efebc412fd2df41531d09dcc0b7
 pic_art = {}
 article = []
 event = {}
@@ -18,26 +11,6 @@ sentence = {}
 PC = 0  # 处理的语句在article中的位置
 
 
-<<<<<<< HEAD
-num = -1  # 记录行数
-for col in article:
-    num = num + 1
-    col = col.split(' ')
-    if col[0] == 'background':
-
-
-        pic_bg = col[2][1:-3]
-    if col[0] == 'character':
-        pic_art[col[1]] = col[3][1:-3]
-    if col[0] == 'event':
-        b = col[3][:-2]
-        if b == 'true':
-            event[col[1]] = True
-        elif b == 'false':
-            event[col[1]] = False
-    if '9' >= col[0][0] >= '1':
-        sentence[col[0]] = num
-=======
 def LoadText(i):
     """
     读取剧本文件
@@ -74,7 +47,6 @@ def AnalyText():
                 event[col[1]] = False
         if '9' >= col[0][0] >= '1':
             sentence[col[0]] = num
->>>>>>> f87fc1ed284c6efebc412fd2df41531d09dcc0b7
 
 
 def LoadInstr():
@@ -99,11 +71,11 @@ def ParseInstr():
     :return: 四个变量分别为左中右需要显示的人物图片，及对话内容
     """
     global R_bool, R_name, PC, i
-    if PC >= len(article):
-        Speaker('', False, '', False, '', False, "本章已完结……")
+    if PC >= len(article) - 1:
+        Speaker('null', False, 'null', False, 'null', False, '本章已完结……')
         i = i + 1
         if i > 3:
-            Speaker('', False, '', False, '', False, "全剧完")
+            Speaker('null', False, 'null', False, 'null', False, "全剧完")
         LoadText(i)  # 加载文本
         AnalyText()  # 处理文本
     while PC < len(article):
@@ -111,11 +83,10 @@ def ParseInstr():
         if ins[0] == 'set':  # 功能扩展
             if ins[1] == 'position':  # 设置人物的显示
                 for k in range(2, 5):
+                    R_name[k - 2] = ins[k]
                     if ins[k] == 'null':
-                        R_name[k-2] = ''
                         R_bool[k-2] = False
                     else:
-                        R_name[k-2] = ins[k]
                         R_bool[k-2] = True
         elif '1' <= ins[0][0] <= '9':
             return ins[3][1:-3]  # 只有遇到说话内容的时候才返回
@@ -135,4 +106,4 @@ while True:  # 无限循环直至用户点击×
             n = R_name
             b = R_bool
             Speaker(n[0], b[0], n[1], b[1], n[2], b[2], t)
-        pygame.display.update()  # 显示图片
+    pygame.display.update()  # 显示图片
