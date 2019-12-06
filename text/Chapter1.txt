@@ -2,7 +2,7 @@ Chapter 1
 
 background = "./img/bg/chapter_1.jpg";
 character 旁白 = "./img/role/pangbai.png";
-character 小五郎 = "./img/role/xiaowulang.png";
+character 小五郎 = "./img/role/erxi.png";
 character 小黑 = "./img/role/xiaohei.jpg";
 
 set position null null null

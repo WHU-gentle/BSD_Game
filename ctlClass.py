@@ -62,7 +62,7 @@ def DisplayPlayer(i, pos):
     role = pic_folder+str(i)+".png"
     # 显示角色图片
     role_pic = pygame.image.load(role)
-    screen.blit(role_pic, (role_position, 0)) 
+    screen.blit(role_pic, (role_position, 158))
 
 
 def DisplayDialog(text):

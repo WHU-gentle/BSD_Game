@@ -5,11 +5,10 @@ import time
 from ctlClass import *
 
 # 游戏资源存储
-<<<<<<< HEAD
-pic_bg = []
-=======
+
+
 pic_bg = ''
->>>>>>> c53c86c00b5b7b581fa88f6774f51bdbbe5131c6
+
 pic_art = {}
 article = []
 event = {}
@@ -28,11 +27,9 @@ for col in article:
     num = num + 1
     col = col.split(' ')
     if col[0] == 'background':
-<<<<<<< HEAD
-        pic_bg.append(col[2][1:-3])
-=======
+
+
         pic_bg = col[2][1:-3]
->>>>>>> c53c86c00b5b7b581fa88f6774f51bdbbe5131c6
     if col[0] == 'character':
         pic_art[col[1]] = col[3][1:-3]
     if col[0] == 'event':
