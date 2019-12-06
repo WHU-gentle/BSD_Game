@@ -164,13 +164,13 @@ def Option(key):
     传入参数：pygame.KEYDOWN时的键盘的值event.key
     返回值：数字1/2/3/4
     '''
-    if event.key == pygame.K_1 :
+    if key == pygame.K_1 :
         return 1
-    elif event.key == pygame.K_2:
+    elif key == pygame.K_2:
         return 2
-    elif event.key == pygame.K_3:
+    elif key == pygame.K_3:
         return 3
-    elif event.key == pygame.K_4:
+    elif key == pygame.K_4:
         return 4
 
 
