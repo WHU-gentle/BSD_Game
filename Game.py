@@ -1,7 +1,7 @@
 import pygame
 import sys
 from ctlClass import Speaker
-
+import time
 # 游戏资源存储
 pic_bg = ''
 pic_art = {}
@@ -73,9 +73,11 @@ def ParseInstr():
     global R_bool, R_name, PC, i
     if PC >= len(article) - 1:
         Speaker('null', False, 'null', False, 'null', False, '本章已完结……')
+        time.sleep(3)
         i = i + 1
         if i > 3:
             Speaker('null', False, 'null', False, 'null', False, "全剧完")
+            sys.exit()
         LoadText(i)  # 加载文本
         AnalyText()  # 处理文本
     while PC < len(article):
@@ -89,7 +91,7 @@ def ParseInstr():
                     else:
                         R_bool[k-2] = True
         elif '1' <= ins[0][0] <= '9':
-            return ins[3][1:-3]  # 只有遇到说话内容的时候才返回
+            return ins[1] + ':' + ins[3][1:-2]  # 只有遇到说话内容的时候才返回
 
 
 # 初始化
