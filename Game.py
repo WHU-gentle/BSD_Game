@@ -1,27 +1,24 @@
-import os
 import pygame
-import io
-import time
-from ctlClass import *
+import sys
+from ctlClass import Speaker
 
 # 游戏资源存储
+<<<<<<< HEAD
 
 
 pic_bg = ''
 
+=======
+pic_bg = ''
+>>>>>>> f87fc1ed284c6efebc412fd2df41531d09dcc0b7
 pic_art = {}
 article = []
 event = {}
 sentence = {}
 PC = 0  # 处理的语句在article中的位置
 
-# 读取结构化剧本文件
-with open(u"./text/Chapter1.txt", encoding='UTF-8') as data:
-    for line in data.readlines():
-        if line == '\n':
-            continue
-        article.append(str(line).strip())
 
+<<<<<<< HEAD
 num = -1  # 记录行数
 for col in article:
     num = num + 1
@@ -40,6 +37,44 @@ for col in article:
             event[col[1]] = False
     if '9' >= col[0][0] >= '1':
         sentence[col[0]] = num
+=======
+def LoadText(i):
+    """
+    读取剧本文件
+    :return:
+    """
+    global article, PC
+    article = []
+    PC = 0
+    with open(u"./text/Chapter"+str(i)+".txt", encoding='UTF-8') as data:
+        for line in data.readlines():
+            if line == '\n':
+                continue
+            article.append(str(line).strip())
+
+
+def AnalyText():
+    global pic_bg, pic_art, sentence
+    num = -1  # 记录行数
+    pic_bg = ''
+    pic_art = {}
+    sentence = {}
+    for col in article:
+        num = num + 1
+        col = col.split(' ')
+        if col[0] == 'background':
+            pic_bg = col[2][1:-3]
+        if col[0] == 'character':
+            pic_art[col[1]] = col[3][1:-3]
+        if col[0] == 'event':
+            b = col[3][:-2]
+            if b == 'true':
+                event[col[1]] = True
+            elif b == 'false':
+                event[col[1]] = False
+        if '9' >= col[0][0] >= '1':
+            sentence[col[0]] = num
+>>>>>>> f87fc1ed284c6efebc412fd2df41531d09dcc0b7
 
 
 def LoadInstr():
@@ -63,7 +98,14 @@ def ParseInstr():
     分析指令函数：判断指令是对话还是功能指令，功能指令则执行器操作，对话指令返回内容进行显示
     :return: 四个变量分别为左中右需要显示的人物图片，及对话内容
     """
-    global R_bool, R_name
+    global R_bool, R_name, PC, i
+    if PC >= len(article):
+        Speaker('', False, '', False, '', False, "本章已完结……")
+        i = i + 1
+        if i > 3:
+            Speaker('', False, '', False, '', False, "全剧完")
+        LoadText(i)  # 加载文本
+        AnalyText()  # 处理文本
     while PC < len(article):
         ins = LoadInstr()  # 取一条指令
         if ins[0] == 'set':  # 功能扩展
@@ -79,11 +121,12 @@ def ParseInstr():
             return ins[3][1:-3]  # 只有遇到说话内容的时候才返回
 
 
+# 初始化
+i = 1
+LoadText(i)
+AnalyText()
 # 控制流程
 while True:  # 无限循环直至用户点击×
-    if PC >= len(article):
-        Speaker('', False, '', False, '', False, "本章已完结……")
-        sys.exit()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:  # 用户按下了结束键
             sys.exit()
@@ -92,4 +135,4 @@ while True:  # 无限循环直至用户点击×
             n = R_name
             b = R_bool
             Speaker(n[0], b[0], n[1], b[1], n[2], b[2], t)
-    pygame.display.update()  # 显示图片
+        pygame.display.update()  # 显示图片
