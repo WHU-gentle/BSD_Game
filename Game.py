@@ -24,6 +24,7 @@ def LoadText(i):
             if line == '\n':
                 continue
             article.append(str(line).strip())
+    Music(i).play()
 
 
 def AnalyText():
