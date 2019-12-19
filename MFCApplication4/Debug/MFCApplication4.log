@@ -1,0 +1,3 @@
+﻿  welcome.cpp
+E:\C-Code\MFCApplication4\welcome.cpp(43): warning C4353: 使用了非标准扩展: 常量 0 作为了函数表达式。 请改用“__noop”内部函数
+  MFCApplication4.vcxproj -> E:\C-Code\MFCApplication4\Debug\MFCApplication4.exe

@@ -1,0 +1,15 @@
+Chapter 1
+background ="达尔扎.png";
+character null="null.png";
+character 小五郎="小五郎.png";
+character 小黑="小黑.png";
+character 尔耳扎="尔耳扎.png";
+character 尔西="尔西.png";
+character 波罗="波罗.png";
+character 洋子="洋子.png";
+character 老太太="老太太.png";
+character 莱纳德="莱纳德.png";
+character 达尔扎="达尔扎.png";
+character 霍华德="霍华德.png";
+1 sys 中 "测试";
+end Chapter;
