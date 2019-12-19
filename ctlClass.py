@@ -68,7 +68,7 @@ def DisplayPlayer(i, pos):
     screen.blit(role_pic, (role_position, 158))
 
 
-def DisplayWords(surf, text, font, color=(0, 0, 0)):
+def DisplayWords(wx, wy, surf, text, font, color=(0, 0, 0)):
     '''
     DisplayWords函数：自动换行，显示文字text到surf上。
     配合DisplayDialog食用
@@ -76,7 +76,7 @@ def DisplayWords(surf, text, font, color=(0, 0, 0)):
     font.origin = True
     width, height = surf.get_size()
     line_spacing = font.get_sized_height() + 2
-    x, y = 0, 530
+    x, y = wx, wy
     
     for zi in text:
         bounds = font.get_rect(zi)
@@ -91,16 +91,20 @@ def DisplayWords(surf, text, font, color=(0, 0, 0)):
     return x, y
 
 
-def DisplayDialog(text):
+def DisplayDialog(img, dx, dy, wx, wy, text):
     '''
     DisplayDialog函数
     function:绘制文字、绘制对话框
     DEC/05/2019 UPDATE:实现了自动换行
-    传入参数：要显示的文字
+    DEC/17/2019 UPDATE:
+    传入参数：  对话框背景图相对路径 img
+                对话框相对于屏幕的位置 dx,dy; 
+                文字相对于屏幕的位置 wx,wy;
+                要显示的文字 text
     '''
-    image=pygame.image.load("img/textIMG.png")
-    screen.blit(image, (0, 500))
-    DisplayWords(screen, text, pygame.freetype.SysFont('Simhei', 20))
+    image=pygame.image.load(img)
+    screen.blit(image, (dx, dy))
+    DisplayWords(wx, wy, screen, text, pygame.freetype.SysFont('Simhei', 20))
 
 
 def ShowPic(text, figure1, figure2, figure3):
@@ -118,7 +122,7 @@ def ShowPic(text, figure1, figure2, figure3):
         DisplayPlayer(figure2, "mid")
     if pic3:
         DisplayPlayer(figure3, "right")
-    DisplayDialog(text)
+    DisplayDialog("img/dialog/textIMG.png", 0, 500, 0, 530, text)
     pygame.display.update()
  
 

@@ -1,6 +1,7 @@
 import pygame
 import sys
 from ctlClass import Speaker, Option
+from crimeScene import LoadScene
 import time
 # 游戏资源存储
 pic_bg = ''
@@ -9,7 +10,6 @@ article = []
 event = {}
 sentence = {}
 PC = 0  # 处理的语句在article中的位置
-
 
 def LoadText(i):
     """
@@ -121,6 +121,12 @@ while True:  # 无限循环直至用户点击×
         if event.type == pygame.QUIT:  # 用户按下了结束键
             sys.exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:
+
+            # 用户点击箭头切换场景
+            px, py = event.pos
+            if (920 <= px <= 978) and (22 <= py <= 55):
+                LoadScene()            #切换场景到案发现场
+
             t = ParseInstr()
             n = R_name
             b = R_bool
