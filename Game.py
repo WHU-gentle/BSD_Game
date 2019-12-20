@@ -2,6 +2,7 @@ import pygame
 import sys
 from ctlClass import Speaker, Option
 from crimeScene import LoadScene
+from music import Music # 音乐类
 import time
 # 游戏资源存储
 pic_bg = ''
